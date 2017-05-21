@@ -64,7 +64,6 @@ class QtAT57 < Formula
       -qt-freetype
       -qt-pcre
       -nomake tests
-      -no-rpath
       -pkg-config
     ]
 
