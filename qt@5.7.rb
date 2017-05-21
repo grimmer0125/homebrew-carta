@@ -18,7 +18,6 @@ class QtAT57 < Formula
 
   option "with-docs", "Build documentation"
   option "with-examples", "Build examples"
-  option "with-qtwebkit", "Build with QtWebkit module"
 
   deprecated_option "qtdbus" => "with-dbus"
   deprecated_option "with-d-bus" => "with-dbus"
@@ -89,10 +88,8 @@ class QtAT57 < Formula
       args << "-no-dbus"
     end
 
-    if build.with? "qtwebkit"
-      (buildpath/"qtwebkit").install resource("qt-webkit")
-      inreplace ".gitmodules", /.*status = obsolete\n((\s*)project = WebKit\.pro)/, "\\1\n\\2initrepo = true"
-    end
+    (buildpath/"qtwebkit").install resource("qt-webkit")
+    inreplace ".gitmodules", /.*status = obsolete\n((\s*)project = WebKit\.pro)/, "\\1\n\\2initrepo = true"
 
     system "./configure", *args
     system "make"
