@@ -65,6 +65,7 @@ class QtAT57 < Formula
       -qt-pcre
       -nomake tests
       -pkg-config
+      -skip qtwebengine
       -skip qtserialbus 
       -skip qtserialport 
       -skip qtsensors 
