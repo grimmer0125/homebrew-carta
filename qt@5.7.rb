@@ -65,6 +65,21 @@ class QtAT57 < Formula
       -qt-pcre
       -nomake tests
       -pkg-config
+      -skip qtserialbus 
+      -skip qtserialport 
+      -skip qtsensors 
+      -skip qtscript 
+      -skip qtlocation 
+      -skip qtconnectivity 
+      -skip qtandroidextras 
+      -skip qtquickcontrols 
+      -skip qtquickcontrols2
+      -no-mips_dsp 
+      -no-mips_dspr2
+      -no-pps 
+      -no-slog2 
+      -no-imf 
+      -no-lgmon 
     ]
 
     args << "-nomake" << "examples" if build.without? "examples"
