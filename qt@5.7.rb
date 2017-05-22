@@ -8,16 +8,17 @@ class QtAT57 < Formula
   sha256 "46ebca977deb629c5e69c2545bc5fe13f7e40012e5e2e451695c583bd33502fa"
   head "https://code.qt.io/qt/qt5.git", :branch => "5.7", :shallow => false
 
-  # bottle do
-  #   sha256 "e8eb4c729e6c3a788c982a740efc95bc96c0055ae929c5662b603bbd7a5a76b0" => :sierra
-  #   sha256 "c1a3f9d43de1cf014060b6d66575ae97e6ae77d9102c28971884a7b28a654e0e" => :el_capitan
-  #   sha256 "a5fe56be34bf03a68d0c42aae04d381ce1254cd3e72959793af33f4800f602ec" => :yosemite
-  # end
+  bottle do
+    sha256 "e8eb4c729e6c3a788c982a740efc95bc96c0055ae929c5662b603bbd7a5a76b0" => :sierra
+    sha256 "c1a3f9d43de1cf014060b6d66575ae97e6ae77d9102c28971884a7b28a654e0e" => :el_capitan
+    sha256 "a5fe56be34bf03a68d0c42aae04d381ce1254cd3e72959793af33f4800f602ec" => :yosemite
+  end
 
   keg_only :versioned_formula
 
   option "with-docs", "Build documentation"
   option "with-examples", "Build examples"
+  option "with-qtwebkit", "Build with QtWebkit module"
 
   deprecated_option "qtdbus" => "with-dbus"
   deprecated_option "with-d-bus" => "with-dbus"
@@ -64,23 +65,8 @@ class QtAT57 < Formula
       -qt-freetype
       -qt-pcre
       -nomake tests
+      -no-rpath
       -pkg-config
-      -skip qtwebengine
-      -skip qtserialbus 
-      -skip qtserialport 
-      -skip qtsensors 
-      -skip qtscript 
-      -skip qtlocation 
-      -skip qtconnectivity 
-      -skip qtandroidextras 
-      -skip qtquickcontrols 
-      -skip qtquickcontrols2
-      -no-mips_dsp 
-      -no-mips_dspr2
-      -no-pps 
-      -no-slog2 
-      -no-imf 
-      -no-lgmon 
     ]
 
     args << "-nomake" << "examples" if build.without? "examples"
@@ -103,8 +89,10 @@ class QtAT57 < Formula
       args << "-no-dbus"
     end
 
-    (buildpath/"qtwebkit").install resource("qt-webkit")
-    inreplace ".gitmodules", /.*status = obsolete\n((\s*)project = WebKit\.pro)/, "\\1\n\\2initrepo = true"
+    if build.with? "qtwebkit"
+      (buildpath/"qtwebkit").install resource("qt-webkit")
+      inreplace ".gitmodules", /.*status = obsolete\n((\s*)project = WebKit\.pro)/, "\\1\n\\2initrepo = true"
+    end
 
     system "./configure", *args
     system "make"
@@ -163,7 +151,6 @@ class QtAT57 < Formula
     (testpath/"main.cpp").write <<-EOS.undent
       #include <QCoreApplication>
       #include <QDebug>
-
       int main(int argc, char *argv[])
       {
         QCoreApplication a(argc, argv);
