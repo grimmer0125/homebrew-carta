@@ -23,7 +23,7 @@ class Qt < Formula
   end
 
   bottle do
-    root_url "https://github.com/CARTAvis/homebrew-tap/releases/download/0.1.1/"
+    root_url "https://github.com/CARTAvis/homebrew-tap/releases/download/0.1.1"
     sha256 "b8925daefa14fb49aa66fcda1b46a81827980ce42012f3f8547288defa22cf64" => :sierra
   end
 
