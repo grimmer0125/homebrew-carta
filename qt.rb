@@ -22,11 +22,10 @@ class Qt < Formula
     end
   end
 
-#   bottle do
-#     sha256 "eff56a84940888c0e9bcb6a95cd5b4d434bee36c6df3162d954cb15f10627c32" => :sierra
-#     sha256 "0f322056717bb8f821aa809c79a3842ce914ce112bc273bbee9f2f05f0819fe3" => :el_capitan
-#     sha256 "762149a177db074d9ee721395739bcc7c264a6fac0604a6a1bc2f913098df2bc" => :yosemite
-#   end
+  bottle do
+    root_url "https://github.com/CARTAvis/homebrew-tap/releases/download/0.1.1/"
+    sha256 "b8925daefa14fb49aa66fcda1b46a81827980ce42012f3f8547288defa22cf64" => :sierra
+  end
 
   keg_only "Qt 5 has CMake issues when linked"
 
@@ -78,21 +77,21 @@ class Qt < Formula
       -pkg-config
       -dbus-runtime
       -skip qtwebengine
-      -skip qtserialbus 
-      -skip qtserialport 
-      -skip qtsensors 
-      -skip qtscript 
-      -skip qtlocation 
-      -skip qtconnectivity 
-      -skip qtandroidextras 
-      -skip qtquickcontrols 
+      -skip qtserialbus
+      -skip qtserialport
+      -skip qtsensors
+      -skip qtscript
+      -skip qtlocation
+      -skip qtconnectivity
+      -skip qtandroidextras
+      -skip qtquickcontrols
       -skip qtquickcontrols2
-      -no-mips_dsp 
+      -no-mips_dsp
       -no-mips_dspr2
-      -no-pps 
-      -no-slog2 
-      -no-imf 
-      -no-lgmon 
+      -no-pps
+      -no-slog2
+      -no-imf
+      -no-lgmon
     ]
 
     args << "-nomake" << "examples" if build.without? "examples"
@@ -115,7 +114,7 @@ class Qt < Formula
 
     (buildpath/"qtwebkit").install resource("qt-webkit")
     inreplace ".gitmodules", /.*status = obsolete\n((\s*)project = WebKit\.pro)/, "\\1\n\\2initrepo = true"
-    
+
 
     system "./configure", *args
     system "make"
